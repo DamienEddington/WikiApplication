@@ -1,1 +1,1 @@
-Wike Application
+Wiki Application
