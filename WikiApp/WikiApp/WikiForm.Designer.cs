@@ -1,6 +1,6 @@
 ﻿namespace WikiApp
 {
-    partial class Form1
+    partial class WikiForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.WikiBox = new System.Windows.Forms.ListBox();
             this.BtnAdd = new System.Windows.Forms.Button();
             this.TxtName = new System.Windows.Forms.TextBox();
             this.TxtCategory = new System.Windows.Forms.TextBox();
@@ -38,16 +37,12 @@
             this.LblStructure = new System.Windows.Forms.Label();
             this.LblDefinition = new System.Windows.Forms.Label();
             this.TxtStructure = new System.Windows.Forms.TextBox();
-            this.TxtDefinition = new System.Windows.Forms.TextBox();
+            this.WikiList = new System.Windows.Forms.ListView();
+            this.ColName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Category = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.TxtDefinition = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // WikiBox
-            // 
-            this.WikiBox.FormattingEnabled = true;
-            this.WikiBox.Location = new System.Drawing.Point(396, 47);
-            this.WikiBox.Name = "WikiBox";
-            this.WikiBox.Size = new System.Drawing.Size(195, 381);
-            this.WikiBox.TabIndex = 0;
             // 
             // BtnAdd
             // 
@@ -126,19 +121,54 @@
             this.TxtStructure.Size = new System.Drawing.Size(100, 20);
             this.TxtStructure.TabIndex = 9;
             // 
+            // WikiList
+            // 
+            this.WikiList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ColName,
+            this.Category});
+            this.WikiList.HideSelection = false;
+            this.WikiList.Location = new System.Drawing.Point(290, 47);
+            this.WikiList.Name = "WikiList";
+            this.WikiList.Size = new System.Drawing.Size(164, 274);
+            this.WikiList.TabIndex = 11;
+            this.WikiList.UseCompatibleStateImageBehavior = false;
+            this.WikiList.View = System.Windows.Forms.View.Details;
+            // 
+            // ColName
+            // 
+            this.ColName.Text = "Name";
+            this.ColName.Width = 80;
+            // 
+            // Category
+            // 
+            this.Category.Text = "Category";
+            this.Category.Width = 80;
+            // 
             // TxtDefinition
             // 
-            this.TxtDefinition.Location = new System.Drawing.Point(81, 125);
+            this.TxtDefinition.Location = new System.Drawing.Point(81, 127);
             this.TxtDefinition.Name = "TxtDefinition";
-            this.TxtDefinition.Size = new System.Drawing.Size(100, 20);
-            this.TxtDefinition.TabIndex = 10;
+            this.TxtDefinition.Size = new System.Drawing.Size(184, 129);
+            this.TxtDefinition.TabIndex = 12;
+            this.TxtDefinition.Text = "";
             // 
-            // Form1
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(118, 313);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // WikiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(636, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.TxtDefinition);
+            this.Controls.Add(this.WikiList);
             this.Controls.Add(this.TxtStructure);
             this.Controls.Add(this.LblDefinition);
             this.Controls.Add(this.LblStructure);
@@ -148,9 +178,7 @@
             this.Controls.Add(this.TxtCategory);
             this.Controls.Add(this.TxtName);
             this.Controls.Add(this.BtnAdd);
-            this.Controls.Add(this.WikiBox);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "WikiForm";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -158,8 +186,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox WikiBox;
         private System.Windows.Forms.Button BtnAdd;
         private System.Windows.Forms.TextBox TxtName;
         private System.Windows.Forms.TextBox TxtCategory;
@@ -169,7 +195,11 @@
         private System.Windows.Forms.Label LblStructure;
         private System.Windows.Forms.Label LblDefinition;
         private System.Windows.Forms.TextBox TxtStructure;
-        private System.Windows.Forms.TextBox TxtDefinition;
+        private System.Windows.Forms.ListView WikiList;
+        private System.Windows.Forms.RichTextBox TxtDefinition;
+        private new System.Windows.Forms.ColumnHeader ColName;
+        private System.Windows.Forms.ColumnHeader Category;
+        private System.Windows.Forms.Button button1;
     }
 }
 
