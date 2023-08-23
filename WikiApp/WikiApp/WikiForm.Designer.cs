@@ -47,6 +47,7 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.BtnEdit = new System.Windows.Forms.Button();
+            this.BtnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnAdd
@@ -211,11 +212,22 @@
             this.BtnEdit.UseVisualStyleBackColor = true;
             this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
+            // BtnTest
+            // 
+            this.BtnTest.Location = new System.Drawing.Point(26, 339);
+            this.BtnTest.Name = "BtnTest";
+            this.BtnTest.Size = new System.Drawing.Size(75, 23);
+            this.BtnTest.TabIndex = 21;
+            this.BtnTest.Text = "Test";
+            this.BtnTest.UseVisualStyleBackColor = true;
+            this.BtnTest.Click += new System.EventHandler(this.BtnTest_Click);
+            // 
             // WikiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 366);
+            this.Controls.Add(this.BtnTest);
             this.Controls.Add(this.BtnEdit);
             this.Controls.Add(this.TxtSearch);
             this.Controls.Add(this.WikiList);
@@ -260,6 +272,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Button BtnEdit;
+        private System.Windows.Forms.Button BtnTest;
     }
 }
 

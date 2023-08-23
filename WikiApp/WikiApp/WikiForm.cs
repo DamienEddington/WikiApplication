@@ -56,7 +56,11 @@ namespace WikiApp
         }
         private void BtnEdit_Click(object sender, EventArgs e)
         {
-            if (WikiList.SelectedItems.Count > 0)
+            if (WikiList.SelectedItems.Count > 0 &&
+                !string.IsNullOrEmpty(TxtName.Text) &&
+                !string.IsNullOrEmpty(TxtCategory.Text) &&
+                !string.IsNullOrEmpty(TxtStructure.Text) &&
+                !string.IsNullOrEmpty(TxtDefinition.Text))
             {
                 int SelectedItem = WikiList.SelectedIndices[0];
                 if (SelectedItem > -1)
@@ -126,6 +130,7 @@ namespace WikiApp
                 MessageBox.Show("Data not added.");
             }
             BtnSave.Enabled = true;
+            TxtName.Focus();
 
         }
         private void BoxClear()
@@ -151,16 +156,31 @@ namespace WikiApp
 
         private void BubbleSort()
         {
-            for (int i = 0; i <= rows; i++)
+            for (int i = 0; i < rows; i++)
             {
-
+                for (int j = 0; j < rows - 1; j++)
+                {
+                    if (string.Compare(WikiArray[i, 0], WikiArray[j, 0]) > 0)
+                    {
+                        Swap(i, j);
+                    }
+                }
             }
+            ArrayData();
         }
 
-        private void Swap()
+        private void Swap(int x, int y)
         {
-
+            string temp;
+            temp = WikiArray[x, 0];
+            WikiArray[x, 0] = WikiArray[y, 0];
+            WikiArray[y, 0] = temp;
         }
         #endregion
+
+        private void BtnTest_Click(object sender, EventArgs e)
+        {
+            BubbleSort();
+        }
     }
 }
