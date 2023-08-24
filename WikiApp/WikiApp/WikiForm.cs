@@ -1,11 +1,13 @@
 ﻿// Author: Damien Eddington (30042780)
 // Title WikiApplication
 // Date: 09/08/2023
+// Description:
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,23 +28,12 @@ namespace WikiApp
         private readonly string[,] WikiArray = new string[rows, columns];
         string SaveFile = "default.dat";
 
-        private void ArrayData()
-        {
-            WikiList.Items.Clear();
-            for (int i = 0; i < rows; i++)
-            {
-                ListViewItem lstItem = new ListViewItem(WikiArray[i, 0]);
-                lstItem.SubItems.Add(WikiArray[i, 1]);
-                lstItem.SubItems.Add(WikiArray[i, 2]);
-                lstItem.SubItems.Add(WikiArray[i, 3]);
-                WikiList.Items.Add(lstItem);
-            }
-        }
         #region Button_Clicks
         private void BtnAdd_Click(object sender, EventArgs e)
         {
+            // Calls the "AddItem, BubbleSort and BoxClear" methods.
             AddItem();
-            ArrayData();
+            BubbleSort();
             BoxClear();
         }
         private void BtnDel_Click(object sender, EventArgs e)
@@ -76,11 +67,15 @@ namespace WikiApp
                 // Error message (please select an item
             }
             BoxClear();
-            ArrayData();
+            BubbleSort();
         }
         private void BtnClear_Click(object sender, EventArgs e)
         {
             BoxClear();
+        }
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            Save();
         }
         #endregion
         #region Start
@@ -103,6 +98,18 @@ namespace WikiApp
         }
         #endregion
         #region Methods
+        private void ArrayData()
+        {
+            WikiList.Items.Clear();
+            for (int i = 0; i < rows; i++)
+            {
+                ListViewItem lstItem = new ListViewItem(WikiArray[i, 0]);
+                lstItem.SubItems.Add(WikiArray[i, 1]);
+                lstItem.SubItems.Add(WikiArray[i, 2]);
+                lstItem.SubItems.Add(WikiArray[i, 3]);
+                WikiList.Items.Add(lstItem);
+            }
+        }
         private void AddItem()
         {
 
@@ -122,7 +129,7 @@ namespace WikiApp
                 }
                 catch
                 {
-                    MessageBox.Show("Data was not added. Array is full.");
+                    MessageBox.Show("Data was not added. Array is full.", "Error");
                 }
             }
             else
@@ -145,24 +152,26 @@ namespace WikiApp
             int SelectedItem = WikiList.SelectedIndices[0];
             if (SelectedItem > -1)
             {
-                WikiArray[SelectedItem, 0] = "-";
-                WikiArray[SelectedItem, 1] = "-";
-                WikiArray[SelectedItem, 2] = "-";
-                WikiArray[SelectedItem, 3] = "-";
+                for (int i = 0; i < columns; i++)
+                {
+                    WikiArray[SelectedItem, i] = "-";
+                }
             }
             BoxClear();
-            ArrayData();
+            BubbleSort();
         }
-
         private void BubbleSort()
         {
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < rows - 1; i++)
             {
-                for (int j = 0; j < rows - 1; j++)
+                for (int j = 0; j < rows - i - 1; j++)
                 {
-                    if (string.Compare(WikiArray[i, 0], WikiArray[j, 0]) > 0)
+                    if (WikiArray[j, 0] != "-" && WikiArray[j + 1, 0] != "-")
                     {
-                        Swap(i, j);
+                        if (string.Compare(WikiArray[j, 0], WikiArray[j + 1, 0]) > 0)
+                        {
+                            Swap(j, j + 1);
+                        }
                     }
                 }
             }
@@ -171,16 +180,35 @@ namespace WikiApp
 
         private void Swap(int x, int y)
         {
-            string temp;
-            temp = WikiArray[x, 0];
-            WikiArray[x, 0] = WikiArray[y, 0];
-            WikiArray[y, 0] = temp;
+            for (int i = 0; i < columns; i++)
+            {
+                string temp = WikiArray[x, i];
+                WikiArray[x, i] = WikiArray[y, i];
+                WikiArray[y, i] = temp;
+            }
         }
         #endregion
 
-        private void BtnTest_Click(object sender, EventArgs e)
+        private void Save()
         {
-            BubbleSort();
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.InitialDirectory = Application.StartupPath;
+            sfd.Filter = "Data Files|*.dat";
+            sfd.FileName = SaveFile;
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                using (BinaryWriter write = new BinaryWriter(File.Open(sfd.FileName, FileMode.Create)))
+                {
+                    for (int i = 0; i < rows; i++)
+                    {
+                        for (int j = 0; j < columns; j++)
+                        {
+                            write.Write(WikiArray[i, j]);
+                        }
+                    }
+                }
+            }
+            
         }
     }
 }

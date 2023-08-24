@@ -47,12 +47,11 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.BtnEdit = new System.Windows.Forms.Button();
-            this.BtnTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnAdd
             // 
-            this.BtnAdd.Location = new System.Drawing.Point(12, 12);
+            this.BtnAdd.Location = new System.Drawing.Point(12, 11);
             this.BtnAdd.Name = "BtnAdd";
             this.BtnAdd.Size = new System.Drawing.Size(75, 23);
             this.BtnAdd.TabIndex = 4;
@@ -62,14 +61,14 @@
             // 
             // TxtName
             // 
-            this.TxtName.Location = new System.Drawing.Point(68, 47);
+            this.TxtName.Location = new System.Drawing.Point(71, 44);
             this.TxtName.Name = "TxtName";
             this.TxtName.Size = new System.Drawing.Size(100, 20);
             this.TxtName.TabIndex = 0;
             // 
             // TxtCategory
             // 
-            this.TxtCategory.Location = new System.Drawing.Point(68, 73);
+            this.TxtCategory.Location = new System.Drawing.Point(71, 73);
             this.TxtCategory.Name = "TxtCategory";
             this.TxtCategory.Size = new System.Drawing.Size(100, 20);
             this.TxtCategory.TabIndex = 1;
@@ -94,7 +93,7 @@
             // 
             // BtnClear
             // 
-            this.BtnClear.Location = new System.Drawing.Point(174, 45);
+            this.BtnClear.Location = new System.Drawing.Point(177, 71);
             this.BtnClear.Name = "BtnClear";
             this.BtnClear.Size = new System.Drawing.Size(75, 23);
             this.BtnClear.TabIndex = 6;
@@ -122,14 +121,14 @@
             // 
             // TxtStructure
             // 
-            this.TxtStructure.Location = new System.Drawing.Point(68, 99);
+            this.TxtStructure.Location = new System.Drawing.Point(71, 99);
             this.TxtStructure.Name = "TxtStructure";
             this.TxtStructure.Size = new System.Drawing.Size(100, 20);
             this.TxtStructure.TabIndex = 2;
             // 
             // BtnSearch
             // 
-            this.BtnSearch.Location = new System.Drawing.Point(271, 12);
+            this.BtnSearch.Location = new System.Drawing.Point(177, 11);
             this.BtnSearch.Name = "BtnSearch";
             this.BtnSearch.Size = new System.Drawing.Size(75, 23);
             this.BtnSearch.TabIndex = 13;
@@ -138,24 +137,25 @@
             // 
             // TxtDefinition
             // 
-            this.TxtDefinition.Location = new System.Drawing.Point(68, 125);
+            this.TxtDefinition.Location = new System.Drawing.Point(71, 125);
             this.TxtDefinition.Multiline = true;
             this.TxtDefinition.Name = "TxtDefinition";
-            this.TxtDefinition.Size = new System.Drawing.Size(172, 208);
+            this.TxtDefinition.Size = new System.Drawing.Size(181, 200);
             this.TxtDefinition.TabIndex = 3;
             // 
             // BtnSave
             // 
-            this.BtnSave.Location = new System.Drawing.Point(374, 339);
+            this.BtnSave.Location = new System.Drawing.Point(364, 331);
             this.BtnSave.Name = "BtnSave";
             this.BtnSave.Size = new System.Drawing.Size(75, 23);
             this.BtnSave.TabIndex = 15;
             this.BtnSave.Text = "Save";
             this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // BtnLoad
             // 
-            this.BtnLoad.Location = new System.Drawing.Point(293, 339);
+            this.BtnLoad.Location = new System.Drawing.Point(283, 331);
             this.BtnLoad.Name = "BtnLoad";
             this.BtnLoad.Size = new System.Drawing.Size(75, 23);
             this.BtnLoad.TabIndex = 16;
@@ -164,7 +164,7 @@
             // 
             // BtnDel
             // 
-            this.BtnDel.Location = new System.Drawing.Point(174, 12);
+            this.BtnDel.Location = new System.Drawing.Point(177, 42);
             this.BtnDel.Name = "BtnDel";
             this.BtnDel.Size = new System.Drawing.Size(75, 23);
             this.BtnDel.TabIndex = 17;
@@ -178,9 +178,9 @@
             this.columnHeader1,
             this.columnHeader2});
             this.WikiList.HideSelection = false;
-            this.WikiList.Location = new System.Drawing.Point(271, 47);
+            this.WikiList.Location = new System.Drawing.Point(258, 39);
             this.WikiList.Name = "WikiList";
-            this.WikiList.Size = new System.Drawing.Size(178, 286);
+            this.WikiList.Size = new System.Drawing.Size(181, 286);
             this.WikiList.TabIndex = 18;
             this.WikiList.UseCompatibleStateImageBehavior = false;
             this.WikiList.View = System.Windows.Forms.View.Details;
@@ -197,14 +197,14 @@
             // 
             // TxtSearch
             // 
-            this.TxtSearch.Location = new System.Drawing.Point(352, 14);
+            this.TxtSearch.Location = new System.Drawing.Point(258, 13);
             this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(100, 20);
+            this.TxtSearch.Size = new System.Drawing.Size(181, 20);
             this.TxtSearch.TabIndex = 19;
             // 
             // BtnEdit
             // 
-            this.BtnEdit.Location = new System.Drawing.Point(93, 12);
+            this.BtnEdit.Location = new System.Drawing.Point(96, 11);
             this.BtnEdit.Name = "BtnEdit";
             this.BtnEdit.Size = new System.Drawing.Size(75, 23);
             this.BtnEdit.TabIndex = 20;
@@ -212,22 +212,11 @@
             this.BtnEdit.UseVisualStyleBackColor = true;
             this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
-            // BtnTest
-            // 
-            this.BtnTest.Location = new System.Drawing.Point(26, 339);
-            this.BtnTest.Name = "BtnTest";
-            this.BtnTest.Size = new System.Drawing.Size(75, 23);
-            this.BtnTest.TabIndex = 21;
-            this.BtnTest.Text = "Test";
-            this.BtnTest.UseVisualStyleBackColor = true;
-            this.BtnTest.Click += new System.EventHandler(this.BtnTest_Click);
-            // 
             // WikiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(459, 366);
-            this.Controls.Add(this.BtnTest);
+            this.ClientSize = new System.Drawing.Size(442, 356);
             this.Controls.Add(this.BtnEdit);
             this.Controls.Add(this.TxtSearch);
             this.Controls.Add(this.WikiList);
@@ -272,7 +261,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Button BtnEdit;
-        private System.Windows.Forms.Button BtnTest;
     }
 }
 
