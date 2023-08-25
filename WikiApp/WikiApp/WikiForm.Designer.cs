@@ -1,4 +1,6 @@
-﻿namespace WikiApp
+﻿using System;
+
+namespace WikiApp
 {
     partial class WikiForm
     {
@@ -161,6 +163,7 @@
             this.BtnLoad.TabIndex = 16;
             this.BtnLoad.Text = "Load";
             this.BtnLoad.UseVisualStyleBackColor = true;
+            this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
             // 
             // BtnDel
             // 
@@ -184,6 +187,8 @@
             this.WikiList.TabIndex = 18;
             this.WikiList.UseCompatibleStateImageBehavior = false;
             this.WikiList.View = System.Windows.Forms.View.Details;
+            this.WikiList.Click += new System.EventHandler(this.WikiList_Click);
+            this.WikiList.DoubleClick += new System.EventHandler(this.WikiList_DoubleClick);
             // 
             // columnHeader1
             // 
