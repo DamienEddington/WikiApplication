@@ -50,10 +50,10 @@ namespace WikiApp
             for (int i = 0; i < rows; i++)
             {
                 // Goes through all columns.
-                for (int x = 0; x < columns; x++)
+                for (int j = 0; j < columns; j++)
                 {
                     // Adds "-" to every position.
-                    WikiArray[i, x] = "-";
+                    WikiArray[i, j] = "-";
                 }
             }
         }
@@ -111,15 +111,15 @@ namespace WikiApp
                 !string.IsNullOrEmpty(TxtDefinition.Text))
             {
                 // Creates int SelectedItem and assigns it to value of the index of the selected item.
-                int SelectedItem = WikiList.SelectedIndices[0];
+                int selectedItem = WikiList.SelectedIndices[0];
                 // Makes sure an item is selected.
-                if (SelectedItem > -1)
+                if (selectedItem > -1)
                 {
                     // Changes data in the 4 columns of the selected items row to the data in the 4 main textboxes.
-                    WikiArray[SelectedItem, 0] = TxtName.Text;
-                    WikiArray[SelectedItem, 1] = TxtCategory.Text;
-                    WikiArray[SelectedItem, 2] = TxtStructure.Text;
-                    WikiArray[SelectedItem, 3] = TxtDefinition.Text;
+                    WikiArray[selectedItem, 0] = TxtName.Text;
+                    WikiArray[selectedItem, 1] = TxtCategory.Text;
+                    WikiArray[selectedItem, 2] = TxtStructure.Text;
+                    WikiArray[selectedItem, 3] = TxtDefinition.Text;
                 }
             }
             // Displays an error if one condition is not met.
@@ -157,16 +157,16 @@ namespace WikiApp
         /// <param name="e"></param>
         private void WikiList_Click(object sender, EventArgs e)
         {
-            if (WikiList.SelectedItems.Count > 0)
+            // Assings int "SelectedItem" to the index of the selected item.
+            int selectedItem = WikiList.SelectedIndices[0];
+            // If there is an item selected:
+            if (selectedItem > -1)
             {
-                int SelectedItem = WikiList.SelectedIndices[0];
-                if (SelectedItem > -1)
-                {
-                    TxtName.Text = WikiArray[SelectedItem, 0];
-                    TxtCategory.Text = WikiArray[SelectedItem, 1];
-                    TxtStructure.Text = WikiArray[SelectedItem, 2];
-                    TxtDefinition.Text = WikiArray[SelectedItem, 3];
-                }
+                // Displays the data in each column of the selected row into the 4 main textboxes.
+                TxtName.Text = WikiArray[selectedItem, 0];
+                TxtCategory.Text = WikiArray[selectedItem, 1];
+                TxtStructure.Text = WikiArray[selectedItem, 2];
+                TxtDefinition.Text = WikiArray[selectedItem, 3];
             }
         }
         /// <summary>
@@ -192,17 +192,22 @@ namespace WikiApp
         #endregion
         #region Methods
         /// <summary>
-        /// 
+        /// Responsible for the display of the data in the array to the list view box.
         /// </summary>
         private void ArrayData()
         {
+            // Clears items in the list view box.
             WikiList.Items.Clear();
+            // Loops through the rows in the array.
             for (int i = 0; i < rows; i++)
             {
+                // Creates new ListViewItem with the value of the current row of the 0 column.
                 ListViewItem lstItem = new ListViewItem(WikiArray[i, 0]);
+                // Adds SubItems for the current row in the other columns.
                 lstItem.SubItems.Add(WikiArray[i, 1]);
                 lstItem.SubItems.Add(WikiArray[i, 2]);
                 lstItem.SubItems.Add(WikiArray[i, 3]);
+                // Adds the item and subitems to the wikilist (list view box)
                 WikiList.Items.Add(lstItem);
             }
         }
@@ -259,12 +264,12 @@ namespace WikiApp
         /// </summary>
         private void Delete()
         {
-            int SelectedItem = WikiList.SelectedIndices[0];
-            if (SelectedItem > -1)
+            int selectedItem = WikiList.SelectedIndices[0];
+            if (selectedItem > -1)
             {
                 for (int i = 0; i < columns; i++)
                 {
-                    WikiArray[SelectedItem, i] = "-";
+                    WikiArray[selectedItem, i] = "-";
                 }
             }
             BoxClear();
@@ -272,8 +277,12 @@ namespace WikiApp
         }
         #endregion
         #region Sort
+        /// <summary>
+        /// Method for sorting data in the array.
+        /// </summary>
         private void BubbleSort()
         {
+            /*
             for (int i = 0; i < rows - 1; i++)
             {
                 for (int j = 0; j < rows - i - 1; j++)
@@ -286,10 +295,31 @@ namespace WikiApp
                         }
                     }
                 }
+            }*/
+            for (int i = 0; i < rows - 1; i++)
+            {
+                for (int j = 0; j < rows - i - 1; j++)
+                {
+                    if (WikiArray[j, 0] == "-" && WikiArray[j + 1, 0] != "-")
+                    {
+                        Swap(j, j + 1);
+                    }
+                    else if (WikiArray[j, 0] != "-" && WikiArray[j + 1, 0] != "-")
+                    {
+                        if (string.Compare(WikiArray[j, 0], WikiArray[j + 1, 0]) > 0)
+                        {
+                            Swap(j, j + 1);
+                        }
+                    }
+                }
             }
             ArrayData();
         }
-
+        /// <summary>
+        /// Method used by the sort method to actually swap the data into the correct order.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         private void Swap(int x, int y)
         {
             for (int i = 0; i < columns; i++)
@@ -301,61 +331,92 @@ namespace WikiApp
         }
         #endregion
         #region SaveLoad
+        /// <summary>
+        /// Method responsible for saving the data in the array to a file.
+        /// </summary>
         private void Save()
         {
+            // Creates a new SaveFileDialog "sfd".
             SaveFileDialog sfd = new SaveFileDialog();
+            // Sets the initial location the dialog opens in.
             sfd.InitialDirectory = Application.StartupPath;
+            // Filters the dialog to .dat files.
             sfd.Filter = "Data Files|*.dat";
+            // Sets the defualt name of the file to 'SaveFile' variable.
             sfd.FileName = SaveFile;
+            // If ok is selected write the data to file:
             if (sfd.ShowDialog() == DialogResult.OK)
             {
+                // Use a binary writer to write data to the selected or created file.
                 using (BinaryWriter write = new BinaryWriter(File.Open(sfd.FileName, FileMode.Create)))
                 {
+                    // Goes through each row.
                     for (int i = 0; i < rows; i++)
                     {
+                        // Goes through each column.
                         for (int j = 0; j < columns; j++)
                         {
+                            // Write the current data in the wiki array to the file.
                             write.Write(WikiArray[i, j]);
                         }
                     }
                 }
             }
         }
+        /// <summary>
+        /// Loads data from a file into the array using an open file dialog.
+        /// </summary>
         private void LoadFile()
         {
+            // Creates a new OpenFileDialog "ofd"
             OpenFileDialog ofd = new OpenFileDialog();
+            // Sets the initial location the ofd opens in.
             ofd.InitialDirectory = Application.StartupPath;
+            // Filters the ofd to .dat files only.
             ofd.Filter = "Data Files|*.dat";
+            // If ok is selected in the ofd:
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                // Uses a binary reader to read data from the opened file.
                 using (BinaryReader read = new BinaryReader(File.Open(ofd.FileName, FileMode.Open)))
                 {
+                    // Goes through each row of the array.
                     for (int i = 0; i < rows; i++)
                     {
+                        // Goes through each column of the array.
                         for (int j = 0; j < columns; j++)
                         {
+                            // Reads data from the file and adds it to the array.
                             WikiArray[i, j] = read.ReadString();
                         }
                     }
                 }
+                // Goes through all the rows in the array starting at the last row.
                 for (int i = rows - 1; i >= 0; i--)
                 {
+                    // Creates bool variabe "hasData" with value 'false'.
                     bool hasData = false;
+                    // Goes through each column.
                     for (int j = 0; j < columns; j++)
                     {
+                        // If current item isn't "-":
                         if (WikiArray[i, j] != "-")
                         {
+                            // Sets hasData to true and breaks out of loop.
                             hasData = true;
                             break;
                         }
                     }
+                    // If hasData is true:
                     if (hasData)
                     {
+                        // Sets i to NextEmpty +1 and breaks out of loop.
                         NextEmpty = i + 1;
                         break;
                     }
                 }
             }
+            // Calls ArrayData method.
             ArrayData();
         }
         #endregion
