@@ -22,11 +22,15 @@ namespace WikiApp
         {
             InitializeComponent();
         }
+        // Creates static readonly variables 'rows' and 'columns;.
         static readonly int rows = 12;
         static readonly int columns = 4;
-        int NextEmpty = 0;
+        // Creates int NextEmpty with value of 0.
+        int nextEmpty = 0;
+        // Creates a 2D array using 'rows' and 'columns'.
         private readonly string[,] WikiArray = new string[rows, columns];
-        readonly string SaveFile = "default.dat";
+        // Creates readonly string 'saveFile'.
+        readonly string saveFile = "default.dat";
 
         /// <summary>
         /// On form load disables the Save button and calls StartUp and ArrayData methods.
@@ -169,6 +173,7 @@ namespace WikiApp
                 TxtDefinition.Text = WikiArray[selectedItem, 3];
             }
         }
+        
         /// <summary>
         /// Calls delete method when List View Item is double clicked.
         /// </summary>
@@ -176,6 +181,7 @@ namespace WikiApp
         /// <param name="e"></param>
         private void WikiList_DoubleClick(object sender, EventArgs e)
         {
+            // Add confirmation message box.
             // Calls Delete method
             Delete();
         }
@@ -216,9 +222,21 @@ namespace WikiApp
         /// </summary>
         private void AddItem()
         {
-            // Checks to make sure there is room in the array and all textboxes are filled.
-            if (NextEmpty < WikiArray.Length &&
-                !string.IsNullOrEmpty(TxtName.Text) &&
+            // Creates int empRow equal to nextEmpty
+            int empRow = nextEmpty;
+            // Goes through rows in the column.
+            for (int i = 0; i < rows; i++)
+            {
+                // Checks if the current row is empty using the IfEmpty method.
+                if (IfEmpty(i))
+                {
+                    // Assigns empRow the value of I and breaks out of loop.
+                    empRow = i;
+                    break;
+                }
+            }
+            // If all textboxes are not empty execute following code:
+            if (!string.IsNullOrEmpty(TxtName.Text) &&
                 !string.IsNullOrEmpty(TxtCategory.Text) &&
                 !string.IsNullOrEmpty(TxtStructure.Text) &&
                 !string.IsNullOrEmpty(TxtDefinition.Text))
@@ -226,12 +244,12 @@ namespace WikiApp
                 try
                 {
                     // Adds data from textboxes to all 4 colomn positions in the next empty row.
-                    WikiArray[NextEmpty, 0] = TxtName.Text; 
-                    WikiArray[NextEmpty, 1] = TxtCategory.Text;
-                    WikiArray[NextEmpty, 2] = TxtStructure.Text;
-                    WikiArray[NextEmpty, 3] = TxtDefinition.Text;
-                    // Adds +1 to NextEmpty variable.
-                    NextEmpty++;
+                    WikiArray[empRow, 0] = TxtName.Text; 
+                    WikiArray[empRow, 1] = TxtCategory.Text;
+                    WikiArray[empRow, 2] = TxtStructure.Text;
+                    WikiArray[empRow, 3] = TxtDefinition.Text;
+                    // Adds +1 to empRow
+                    empRow++;
                 }
                 catch
                 {
@@ -264,16 +282,41 @@ namespace WikiApp
         /// </summary>
         private void Delete()
         {
+            // Creates int selectedItem equal to the current item selected.
             int selectedItem = WikiList.SelectedIndices[0];
+            // If there is an item selected:
             if (selectedItem > -1)
             {
+                // Go through all columns.
                 for (int i = 0; i < columns; i++)
                 {
+                    // Change values in the row to "-"
                     WikiArray[selectedItem, i] = "-";
                 }
             }
+            // Calls the box clear and bubblesort methods.
             BoxClear();
             BubbleSort();
+        }
+        /// <summary>
+        /// Checks cells in a row to see if they are empty or not.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        private bool IfEmpty(int empRow)
+        {
+            // Loop through the columns in the row.
+            for (int j = 0; j < columns; j++)
+            {
+                // Checks to see if the item/cell is empty or not ("-")
+                if (WikiArray[empRow, j] != "-")
+                {
+                    // If its not empty return false. (Cell not empty)
+                    return false;
+                }
+            }
+            // Otherwise return true (Cell is empty)
+            return true;
         }
         #endregion
         #region Sort
@@ -282,20 +325,6 @@ namespace WikiApp
         /// </summary>
         private void BubbleSort()
         {
-            /*
-            for (int i = 0; i < rows - 1; i++)
-            {
-                for (int j = 0; j < rows - i - 1; j++)
-                {
-                    if (WikiArray[j, 0] != "-" && WikiArray[j + 1, 0] != "-")
-                    {
-                        if (string.Compare(WikiArray[j, 0], WikiArray[j + 1, 0]) > 0)
-                        {
-                            Swap(j, j + 1);
-                        }
-                    }
-                }
-            }*/
             for (int i = 0; i < rows - 1; i++)
             {
                 for (int j = 0; j < rows - i - 1; j++)
@@ -313,6 +342,7 @@ namespace WikiApp
                     }
                 }
             }
+            // Calls the ArrayData method.
             ArrayData();
         }
         /// <summary>
@@ -322,10 +352,14 @@ namespace WikiApp
         /// <param name="y"></param>
         private void Swap(int x, int y)
         {
+            // Goes through each column in the array.
             for (int i = 0; i < columns; i++)
             {
+                // Creates string 'temp' used to store item temporarily.
                 string temp = WikiArray[x, i];
+                // Swap values of 2 rows.
                 WikiArray[x, i] = WikiArray[y, i];
+                // Put item in temp into the second row.
                 WikiArray[y, i] = temp;
             }
         }
@@ -343,7 +377,7 @@ namespace WikiApp
             // Filters the dialog to .dat files.
             sfd.Filter = "Data Files|*.dat";
             // Sets the defualt name of the file to 'SaveFile' variable.
-            sfd.FileName = SaveFile;
+            sfd.FileName = saveFile;
             // If ok is selected write the data to file:
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -391,32 +425,33 @@ namespace WikiApp
                         }
                     }
                 }
-                // Goes through all the rows in the array starting at the last row.
-                for (int i = rows - 1; i >= 0; i--)
+            }
+            // Goes through all the rows in the array starting at the last row.
+            for (int i = rows - 1; i >= 0; i--)
+            {
+                // Creates bool variabe "hasData" with value 'false'.
+                bool hasData = false;
+                // Goes through each column.
+                for (int j = 0; j < columns; j++)
                 {
-                    // Creates bool variabe "hasData" with value 'false'.
-                    bool hasData = false;
-                    // Goes through each column.
-                    for (int j = 0; j < columns; j++)
+                    // If current item isn't "-":
+                    if (WikiArray[i, j] != "-")
                     {
-                        // If current item isn't "-":
-                        if (WikiArray[i, j] != "-")
-                        {
-                            // Sets hasData to true and breaks out of loop.
-                            hasData = true;
-                            break;
-                        }
-                    }
-                    // If hasData is true:
-                    if (hasData)
-                    {
-                        // Sets i to NextEmpty +1 and breaks out of loop.
-                        NextEmpty = i + 1;
+                        // Sets hasData to true and breaks out of loop.
+                        hasData = true;
                         break;
                     }
                 }
+                // If hasData is true:
+                if (hasData)
+                {
+                    // Sets i to NextEmpty +1 and breaks out of loop.
+                    nextEmpty = i + 1;
+                    break;
+                }
+                nextEmpty = 0;
             }
-            // Calls ArrayData method.
+            // Calls ArrayData and Empty methods.
             ArrayData();
         }
         #endregion
