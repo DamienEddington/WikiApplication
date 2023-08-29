@@ -1,0 +1,112 @@
+-----Next Search-----
+Target: Array
+Min: -1, Max: 12
+Mid: 5
+Min: -1, Max: 5
+Mid: 2
+Min: -1, Max: 2
+Mid: 0
+Min: 1, Max: 2
+Mid: 1
+Target Found.
+-----Next Search-----
+Target: Not Array
+Min: -1, Max: 12
+Mid: 5
+Min: 6, Max: 12
+Mid: 9
+Min: 6, Max: 9
+Mid: 7
+Min: 8, Max: 9
+Mid: 8
+Target not found.
+-----Next Search-----
+Target: 1
+Min: -1, Max: 12
+Mid: 5
+Min: -1, Max: 5
+Mid: 2
+Min: -1, Max: 2
+Mid: 0
+Target Found.
+-----Next Search-----
+Target: List
+Min: -1, Max: 12
+Mid: 5
+Min: 6, Max: 12
+Mid: 9
+Min: 6, Max: 9
+Mid: 7
+Target Found.
+-----Next Search-----
+Target: Set
+Min: -1, Max: 12
+Mid: 5
+Min: 6, Max: 12
+Mid: 9
+Min: 10, Max: 12
+Mid: 11
+Min: 10, Max: 11
+Mid: 10
+Target Found.
+-----Next Search-----
+Target: H
+Min: -1, Max: 12
+Mid: 5
+Min: -1, Max: 5
+Mid: 2
+Min: 3, Max: 5
+Mid: 4
+Min: 3, Max: 4
+Mid: 3
+Target not found.
+-----Next Search-----
+Target: Array
+Min: -1, Max: 12
+Mid: 5
+Min: -1, Max: 5
+Mid: 2
+Min: -1, Max: 2
+Mid: 0
+Min: 1, Max: 2
+Mid: 1
+Target Found.
+-----Next Search-----
+Target: 2D Array
+Min: -1, Max: 12
+Mid: 5
+Min: -1, Max: 5
+Mid: 2
+Min: -1, Max: 2
+Mid: 0
+Target Found.
+-----Next Search-----
+Target: Heap
+Min: -1, Max: 12
+Mid: 5
+Target Found.
+-----Next Search-----
+Target: Queue
+Min: -1, Max: 12
+Mid: 5
+Min: 6, Max: 12
+Mid: 9
+Min: 6, Max: 9
+Mid: 7
+Min: 8, Max: 9
+Mid: 8
+Target Found.
+-----Next Search-----
+Target: Self-Balance Tree
+Min: -1, Max: 12
+Mid: 5
+Min: 6, Max: 12
+Mid: 9
+Target Found.
+-----Next Search-----
+Target: Binary Search Tree
+Min: -1, Max: 12
+Mid: 5
+Min: -1, Max: 5
+Mid: 2
+Target Found.

@@ -1,0 +1,8 @@
+ArrayArrayLinear`An Array is a data structure that is able to store a fixed amount of data of the same data type.Binary Search TreeTree
+Non-linear¿A node based binary tree data structure in which the left subtree contains nodes with lesser keys than the main node and the right subtree is the opposite and contains nodes with greater keys.GraphGraphs
+Non-linear¶A graph is a non-linear data structure that consists of vertices and edges. Vertices or nodes represent data points and edges are the relationships between the nodes.
+Hash TableHash
+Non-linearñA hash table is a data structure that stores data in an associative manner and in array format meaning each data point has its own unique index value.HeapTree
+Non-linearvA heap is a data structure that satisfies the heap property in which each node is always greater than its child nodes.Linked ListListLinearèA linked list is a linear data structure containing a series of selected nodes. Each node stores its own data and the address of the next node.ListListLinearUA data structure that stores a collection of data of multiple data types in sequence.QueueAbstractLinear{A queue is a linear data structure open at both ends in which operations are performed in FIFO or first in first out order.Self-Balance TreeTree
+Non-linearûA type of binary search tree that automatically adjusts its structure if elements are added or removed in order to maintain efficient or balanced performance.SetAbstract
+Non-linear]A set is a non-linear data structure that stores multiple elements of the same type in order.StackAbstractLinearnA linear data structure where the last element added is the first removed. A stack follows the LIFO principle.

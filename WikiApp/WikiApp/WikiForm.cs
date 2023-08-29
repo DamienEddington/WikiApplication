@@ -1,11 +1,12 @@
 ﻿// Author: Damien Eddington (30042780)
 // Title WikiApplication
 // Date: 09/08/2023
-// Description:
+// Description: 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -84,14 +85,7 @@ namespace WikiApp
             // If an item is selected show message box.
             if (WikiList.SelectedItems.Count > 0)
             {
-                // Creates a message box with yes and no options.
-                DialogResult delRes = MessageBox.Show("Are you sure you want to delete the selected item?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                // If message box button yes is selected:
-                if (delRes == DialogResult.Yes)
-                {
-                    // Call delete method.
-                    Delete();
-                }
+                Delete();
             }
             // If no item selected:
             else
@@ -129,6 +123,7 @@ namespace WikiApp
             // Displays an error if one condition is not met.
             else
             {
+                // Error message.
                 MessageBox.Show("Please make sure all text boxes are filled and an item is selected.", "Error");
             }
             // Calls BoxClear and BubbleSort methods.
@@ -142,7 +137,9 @@ namespace WikiApp
         /// <param name="e"></param>
         private void BtnClear_Click(object sender, EventArgs e)
         {
+            // Calls BoxClear method.
             BoxClear();
+            StsStripLbl.Text = "Textboxes cleared.";
         }
         /// <summary>
         /// On Save button click calls Save method.
@@ -173,7 +170,6 @@ namespace WikiApp
                 TxtDefinition.Text = WikiArray[selectedItem, 3];
             }
         }
-        
         /// <summary>
         /// Calls delete method when List View Item is double clicked.
         /// </summary>
@@ -181,8 +177,7 @@ namespace WikiApp
         /// <param name="e"></param>
         private void WikiList_DoubleClick(object sender, EventArgs e)
         {
-            // Add confirmation message box.
-            // Calls Delete method
+            // Calls Delete method.
             Delete();
         }
         /// <summary>
@@ -194,6 +189,16 @@ namespace WikiApp
         {
             // Calls load file method.
             LoadFile();
+        }
+        /// <summary>
+        /// Calls the search method.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+            // Calls the BinarySearch method.
+            BinarySearch();
         }
         #endregion
         #region Methods
@@ -265,6 +270,7 @@ namespace WikiApp
             // Enables the save button and refocuses on the name textbox for next data entry.
             BtnSave.Enabled = true;
             TxtName.Focus();
+            StsStripLbl.Text = "Data added";
         }
         /// <summary>
         /// Clears all 4 main textboxes.
@@ -282,21 +288,29 @@ namespace WikiApp
         /// </summary>
         private void Delete()
         {
-            // Creates int selectedItem equal to the current item selected.
-            int selectedItem = WikiList.SelectedIndices[0];
-            // If there is an item selected:
-            if (selectedItem > -1)
+            // Creates a message box with yes and no options.
+            DialogResult delRes = MessageBox.Show("Are you sure you want to delete the selected item?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            // If message box button yes is selected:
+            if (delRes == DialogResult.Yes)
             {
-                // Go through all columns.
-                for (int i = 0; i < columns; i++)
+                // Creates int selectedItem equal to the current item selected.
+                int selectedItem = WikiList.SelectedIndices[0];
+                // If there is an item selected:
+                if (selectedItem > -1)
                 {
-                    // Change values in the row to "-"
-                    WikiArray[selectedItem, i] = "-";
+                    // Go through all columns.
+                    for (int i = 0; i < columns; i++)
+                    {
+                        // Change values in the row to "-"
+                        WikiArray[selectedItem, i] = "-";
+                    }
                 }
             }
             // Calls the box clear and bubblesort methods.
             BoxClear();
             BubbleSort();
+            // Changes status strip text.
+            StsStripLbl.Text = "Item deleted";
         }
         /// <summary>
         /// Checks cells in a row to see if they are empty or not.
@@ -318,6 +332,87 @@ namespace WikiApp
             // Otherwise return true (Cell is empty)
             return true;
         }
+        /// <summary>
+        /// Searches through data in the array to find the data input to the search button text box.
+        /// </summary>
+        private void BinarySearch()
+        {
+            // Creates new streamwriter that writes to Debug.txt (append).
+            StreamWriter textWriter = new StreamWriter("Debug.txt", true);
+            // If textbox is not empty execute following code:
+            if (!string.IsNullOrEmpty(BtnSearch.Text))
+            {
+                // Creates int 'firstItem' equal to -1
+                int firstItem = -1;
+                // Creates int 'lastItem' equal to nextEmpty variable
+                int lastItem = nextEmpty;
+                // Creates int 'foundPos' with value 0;
+                int foundPos = 0;
+                // Creates bool 'found' with value false.
+                bool found = false;
+                // Writes next search to debug.txt (for readability)
+                textWriter.WriteLine("-----Next Search-----");
+                // Writes the current target to debug.txt and output - debug.
+                Trace.TraceInformation("Target: {0}", TxtSearch.Text);
+                textWriter.WriteLine("Target: {0}", TxtSearch.Text);
+                // While target is not found and lastItem and firstItem difference is great than 0 execute following:
+                while (!found && !((lastItem - firstItem) <= 0))
+                {
+                    // Creates int 'mid' equal to the middle of the first and last items in current search.
+                    int mid = (lastItem + firstItem) / 2;
+                    // Writes min, max and mid to debug.txt and output - debug.
+                    Trace.TraceInformation("Min: {0}, Max: {1}", firstItem, lastItem);
+                    textWriter.WriteLine("Min: {0}, Max: {1}", firstItem, lastItem);
+                    Trace.TraceInformation("Mid: " + mid);
+                    textWriter.WriteLine("Mid: " + mid);
+                    // Compares mid to text searched and if they are the same execute following:
+                    if (string.Compare(WikiArray[mid, 0], TxtSearch.Text) == 0)
+                    {
+                        // Sets foundPos variable to mid variable value. Sets found to true and breaks out of loop.
+                        foundPos = mid;
+                        found = true;
+                        break;
+                    }
+                    // Compare mid to text searched. If value is not the same execute following:
+                    else if (string.Compare(WikiArray[mid, 0], TxtSearch.Text) < 0)
+                    {
+                        // Sets first item variable to value of mid variable + 1.
+                        firstItem = mid + 1;
+                    }
+                    else
+                    {
+                        // Sets lastItem variable to value of mid variable.
+                        lastItem = mid;
+                    }
+                }
+                // If found = true:
+                if (found)
+                {
+                    // Writes target found to debug.txt and output - debug.
+                    Trace.TraceInformation("Target Found.");
+                    textWriter.WriteLine("Target Found.");
+                    // Messagebox and status strip for item found.
+                    MessageBox.Show($"Item found at position {foundPos + 1}.", "Found");
+                    StsStripLbl.Text = "Target Found";
+                }
+                else
+                {
+                    // Trace and textwriter for target not found.
+                    Trace.TraceInformation("Target not found.");
+                    textWriter.WriteLine("Target not found.");
+                    // Messagebox and status strip for target not found.
+                    MessageBox.Show("Item not found.", "Not found");
+                    StsStripLbl.Text = "Target does not exist in array.";
+                }
+            }
+            else
+            {
+                // Error message for empty textbox.
+                MessageBox.Show("Text box empty.", "Error");
+            }
+            // Close textwriter.
+            textWriter.Close();
+        }
         #endregion
         #region Sort
         /// <summary>
@@ -325,18 +420,25 @@ namespace WikiApp
         /// </summary>
         private void BubbleSort()
         {
+            // Goes through rows in the array in first column.
             for (int i = 0; i < rows - 1; i++)
             {
+                // Loop for comparing items in the array.
                 for (int j = 0; j < rows - i - 1; j++)
                 {
+                    // Check items to see if they are sorted, also ensures "-" are swapped with non "-" so they are swapped to the bottom.
                     if (WikiArray[j, 0] == "-" && WikiArray[j + 1, 0] != "-")
                     {
+                        // Calls swap method.
                         Swap(j, j + 1);
                     }
+                    // Checks for "-" if both items are not dashes execute following:
                     else if (WikiArray[j, 0] != "-" && WikiArray[j + 1, 0] != "-")
                     {
+                        // Compares elements to see if they need to be swapped.
                         if (string.Compare(WikiArray[j, 0], WikiArray[j + 1, 0]) > 0)
                         {
+                            // Calls swap method.
                             Swap(j, j + 1);
                         }
                     }
@@ -396,6 +498,8 @@ namespace WikiApp
                     }
                 }
             }
+            // Changes status strip text.
+            StsStripLbl.Text = "Data saved.";
         }
         /// <summary>
         /// Loads data from a file into the array using an open file dialog.
@@ -411,19 +515,27 @@ namespace WikiApp
             // If ok is selected in the ofd:
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                // Uses a binary reader to read data from the opened file.
-                using (BinaryReader read = new BinaryReader(File.Open(ofd.FileName, FileMode.Open)))
+                try
                 {
-                    // Goes through each row of the array.
-                    for (int i = 0; i < rows; i++)
+                    // Uses a binary reader to read data from the opened file.
+                    using (BinaryReader read = new BinaryReader(File.Open(ofd.FileName, FileMode.Open)))
                     {
-                        // Goes through each column of the array.
-                        for (int j = 0; j < columns; j++)
+                        // Goes through each row of the array.
+                        for (int i = 0; i < rows; i++)
                         {
-                            // Reads data from the file and adds it to the array.
-                            WikiArray[i, j] = read.ReadString();
+                            // Goes through each column of the array.
+                            for (int j = 0; j < columns; j++)
+                            {
+                                // Reads data from the file and adds it to the array.
+                                WikiArray[i, j] = read.ReadString();
+                            }
                         }
                     }
+                }
+                catch
+                {
+                    // Informs user there is missing data. Stops code crashing, missing data can still be edited.
+                    MessageBox.Show("There is missing data.");
                 }
             }
             // Goes through all the rows in the array starting at the last row.
@@ -449,10 +561,13 @@ namespace WikiApp
                     nextEmpty = i + 1;
                     break;
                 }
+                // Sets next empty to 0.
                 nextEmpty = 0;
             }
-            // Calls ArrayData and Empty methods.
+            // Calls ArrayData method, enables the save button and changes status strip text.
             ArrayData();
+            BtnSave.Enabled = true;
+            StsStripLbl.Text = "Data loaded.";
         }
         #endregion
     }

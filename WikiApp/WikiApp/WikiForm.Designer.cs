@@ -30,6 +30,7 @@ namespace WikiApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.BtnAdd = new System.Windows.Forms.Button();
             this.TxtName = new System.Windows.Forms.TextBox();
             this.TxtCategory = new System.Windows.Forms.TextBox();
@@ -49,6 +50,11 @@ namespace WikiApp
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.TxtSearch = new System.Windows.Forms.TextBox();
             this.BtnEdit = new System.Windows.Forms.Button();
+            this.StsStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.StsStripLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StsStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnAdd
@@ -58,6 +64,7 @@ namespace WikiApp
             this.BtnAdd.Size = new System.Drawing.Size(75, 23);
             this.BtnAdd.TabIndex = 4;
             this.BtnAdd.Text = "Add";
+            this.toolTip1.SetToolTip(this.BtnAdd, "Add data to the array. Data will not be added if array is full.");
             this.BtnAdd.UseVisualStyleBackColor = true;
             this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
@@ -67,6 +74,7 @@ namespace WikiApp
             this.TxtName.Name = "TxtName";
             this.TxtName.Size = new System.Drawing.Size(100, 20);
             this.TxtName.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.TxtName, "Insert name of item here.");
             // 
             // TxtCategory
             // 
@@ -74,6 +82,7 @@ namespace WikiApp
             this.TxtCategory.Name = "TxtCategory";
             this.TxtCategory.Size = new System.Drawing.Size(100, 20);
             this.TxtCategory.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.TxtCategory, "Insert category of item here.");
             // 
             // LblName
             // 
@@ -100,6 +109,7 @@ namespace WikiApp
             this.BtnClear.Size = new System.Drawing.Size(75, 23);
             this.BtnClear.TabIndex = 6;
             this.BtnClear.Text = "Clear";
+            this.toolTip1.SetToolTip(this.BtnClear, "Clear Name, Category, Structure and Definition textboxes.");
             this.BtnClear.UseVisualStyleBackColor = true;
             this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
@@ -127,6 +137,7 @@ namespace WikiApp
             this.TxtStructure.Name = "TxtStructure";
             this.TxtStructure.Size = new System.Drawing.Size(100, 20);
             this.TxtStructure.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.TxtStructure, "Insert structure of item here.");
             // 
             // BtnSearch
             // 
@@ -135,7 +146,9 @@ namespace WikiApp
             this.BtnSearch.Size = new System.Drawing.Size(75, 23);
             this.BtnSearch.TabIndex = 13;
             this.BtnSearch.Text = "Search";
+            this.toolTip1.SetToolTip(this.BtnSearch, "Search for target input into textbox.");
             this.BtnSearch.UseVisualStyleBackColor = true;
+            this.BtnSearch.Click += new System.EventHandler(this.BtnSearch_Click);
             // 
             // TxtDefinition
             // 
@@ -144,6 +157,7 @@ namespace WikiApp
             this.TxtDefinition.Name = "TxtDefinition";
             this.TxtDefinition.Size = new System.Drawing.Size(181, 200);
             this.TxtDefinition.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.TxtDefinition, "Insert definition of item here.");
             // 
             // BtnSave
             // 
@@ -152,6 +166,7 @@ namespace WikiApp
             this.BtnSave.Size = new System.Drawing.Size(75, 23);
             this.BtnSave.TabIndex = 15;
             this.BtnSave.Text = "Save";
+            this.toolTip1.SetToolTip(this.BtnSave, "Save data into .dat files.");
             this.BtnSave.UseVisualStyleBackColor = true;
             this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
@@ -162,6 +177,7 @@ namespace WikiApp
             this.BtnLoad.Size = new System.Drawing.Size(75, 23);
             this.BtnLoad.TabIndex = 16;
             this.BtnLoad.Text = "Load";
+            this.toolTip1.SetToolTip(this.BtnLoad, "Load data into list box using .dat files.");
             this.BtnLoad.UseVisualStyleBackColor = true;
             this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
             // 
@@ -172,6 +188,7 @@ namespace WikiApp
             this.BtnDel.Size = new System.Drawing.Size(75, 23);
             this.BtnDel.TabIndex = 17;
             this.BtnDel.Text = "Delete";
+            this.toolTip1.SetToolTip(this.BtnDel, "Delete current selected item in list view box.");
             this.BtnDel.UseVisualStyleBackColor = true;
             this.BtnDel.Click += new System.EventHandler(this.BtnDel_Click);
             // 
@@ -185,6 +202,7 @@ namespace WikiApp
             this.WikiList.Name = "WikiList";
             this.WikiList.Size = new System.Drawing.Size(181, 286);
             this.WikiList.TabIndex = 18;
+            this.toolTip1.SetToolTip(this.WikiList, "Item display. Click item for more information. Double click item to delete.");
             this.WikiList.UseCompatibleStateImageBehavior = false;
             this.WikiList.View = System.Windows.Forms.View.Details;
             this.WikiList.Click += new System.EventHandler(this.WikiList_Click);
@@ -206,6 +224,7 @@ namespace WikiApp
             this.TxtSearch.Name = "TxtSearch";
             this.TxtSearch.Size = new System.Drawing.Size(181, 20);
             this.TxtSearch.TabIndex = 19;
+            this.toolTip1.SetToolTip(this.TxtSearch, "Insert search target here.");
             // 
             // BtnEdit
             // 
@@ -214,14 +233,38 @@ namespace WikiApp
             this.BtnEdit.Size = new System.Drawing.Size(75, 23);
             this.BtnEdit.TabIndex = 20;
             this.BtnEdit.Text = "Edit";
+            this.toolTip1.SetToolTip(this.BtnEdit, "Edit a selected item in the list view box. Ensure item is selected then change da" +
+        "ta in the 4 textboxes below. Then click edit.");
             this.BtnEdit.UseVisualStyleBackColor = true;
             this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
+            // 
+            // StsStrip
+            // 
+            this.StsStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.StsStripLbl});
+            this.StsStrip.Location = new System.Drawing.Point(0, 356);
+            this.StsStrip.Name = "StsStrip";
+            this.StsStrip.Size = new System.Drawing.Size(442, 22);
+            this.StsStrip.TabIndex = 21;
+            this.StsStrip.Text = "Status:";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            // 
+            // StsStripLbl
+            // 
+            this.StsStripLbl.Name = "StsStripLbl";
+            this.StsStripLbl.Size = new System.Drawing.Size(0, 17);
             // 
             // WikiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 356);
+            this.ClientSize = new System.Drawing.Size(442, 378);
+            this.Controls.Add(this.StsStrip);
             this.Controls.Add(this.BtnEdit);
             this.Controls.Add(this.TxtSearch);
             this.Controls.Add(this.WikiList);
@@ -241,6 +284,8 @@ namespace WikiApp
             this.Controls.Add(this.BtnAdd);
             this.Name = "WikiForm";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.StsStrip.ResumeLayout(false);
+            this.StsStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,6 +311,10 @@ namespace WikiApp
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TextBox TxtSearch;
         private System.Windows.Forms.Button BtnEdit;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.StatusStrip StsStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel StsStripLbl;
     }
 }
 
