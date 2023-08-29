@@ -129,6 +129,8 @@ namespace WikiApp
             // Calls BoxClear and BubbleSort methods.
             BoxClear();
             BubbleSort();
+            // Set status strip text to Item edited.
+            StsStripLbl.Text = "Item edited";
         }
         /// <summary>
         /// On Clear button click calls BoxClear method.
