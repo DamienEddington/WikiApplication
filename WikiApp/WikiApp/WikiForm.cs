@@ -1,7 +1,7 @@
 ﻿// Author: Damien Eddington (30042780)
 // Title WikiApplication
 // Date: 09/08/2023
-// Description: 
+// Description: A program to add data into an array and display it in a list. The program can add, delete, edit and search for specfic data as well as display its information.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -199,7 +199,8 @@ namespace WikiApp
         /// <param name="e"></param>
         private void BtnSearch_Click(object sender, EventArgs e)
         {
-            // Calls the BinarySearch method.
+            // Calls the HasData and BinarySearch method.
+            HasData();
             BinarySearch();
         }
         #endregion
@@ -237,7 +238,7 @@ namespace WikiApp
                 // Checks if the current row is empty using the IfEmpty method.
                 if (IfEmpty(i))
                 {
-                    // Assigns empRow the value of I and breaks out of loop.
+                    // Assigns empRow the value of i and breaks out of loop.
                     empRow = i;
                     break;
                 }
@@ -412,6 +413,9 @@ namespace WikiApp
                 // Error message for empty textbox.
                 MessageBox.Show("Text box empty.", "Error");
             }
+            // Focuses and clears search textbox.
+            TxtSearch.Clear();
+            TxtSearch.Focus();
             // Close textwriter.
             textWriter.Close();
         }
@@ -465,6 +469,38 @@ namespace WikiApp
                 WikiArray[x, i] = WikiArray[y, i];
                 // Put item in temp into the second row.
                 WikiArray[y, i] = temp;
+            }
+        }
+        /// <summary>
+        /// Finds out which cells have data and which do not ("-"). 
+        /// </summary>
+        private void HasData()
+        {
+            // Goes through all the rows in the array starting at the last row.
+            for (int i = rows - 1; i >= 0; i--)
+            {
+                // Creates bool variabe "hasData" with value 'false'.
+                bool hasData = false;
+                // Goes through each column.
+                for (int j = 0; j < columns; j++)
+                {
+                    // If current item isn't "-":
+                    if (WikiArray[i, j] != "-")
+                    {
+                        // Sets hasData to true and breaks out of loop.
+                        hasData = true;
+                        break;
+                    }
+                }
+                // If hasData is true:
+                if (hasData)
+                {
+                    // Sets i to NextEmpty +1 and breaks out of loop.
+                    nextEmpty = i + 1;
+                    break;
+                }
+                // Sets next empty to 0.
+                nextEmpty = 0;
             }
         }
         #endregion
@@ -540,32 +576,8 @@ namespace WikiApp
                     MessageBox.Show("There is missing data.");
                 }
             }
-            // Goes through all the rows in the array starting at the last row.
-            for (int i = rows - 1; i >= 0; i--)
-            {
-                // Creates bool variabe "hasData" with value 'false'.
-                bool hasData = false;
-                // Goes through each column.
-                for (int j = 0; j < columns; j++)
-                {
-                    // If current item isn't "-":
-                    if (WikiArray[i, j] != "-")
-                    {
-                        // Sets hasData to true and breaks out of loop.
-                        hasData = true;
-                        break;
-                    }
-                }
-                // If hasData is true:
-                if (hasData)
-                {
-                    // Sets i to NextEmpty +1 and breaks out of loop.
-                    nextEmpty = i + 1;
-                    break;
-                }
-                // Sets next empty to 0.
-                nextEmpty = 0;
-            }
+            // Calls HasData method.
+            HasData();
             // Calls ArrayData method, enables the save button and changes status strip text.
             ArrayData();
             BtnSave.Enabled = true;
